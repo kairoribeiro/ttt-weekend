@@ -1,5 +1,5 @@
 body {
-    background-color: gray;
+  background-color: orange;
 	/* Use a system font, if none are available use an available sans-sarif   font */
 	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
 		Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -7,6 +7,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 section.board {
@@ -16,9 +17,39 @@ section.board {
   grid-gap: 0vmin;
 }
 
+h1 {
+  color: blue;
+}
+
 div {
-  border: 3px solid black;
+  border: 2px solid black;
   font-size: 8vmin;
   text-align: center;
   vertical-align: middle;
+}
+#sq0, #sq1, #sq2 {
+  border-top: none;
+}
+
+#sq2, #sq5, #sq8 {
+  border-right: none;
+}
+
+#sq6, #sq7, #sq8 {
+  border-bottom: none;
+}
+
+#sq0, #sq3, #sq6 {
+  border-left: none;
+}
+.controls {
+  margin: 10px;
+}
+
+.display {
+  margin: 20px;
+}
+
+#reset {
+  background-color: aqua;
 }
