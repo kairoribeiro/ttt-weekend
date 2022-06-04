@@ -1,52 +1,101 @@
 /*-------------------------------- Constants --------------------------------*/
-winningCombos = [
-    [0, 1, 2]
-    [3, 4, 5]
-    [6, 7, 8]
-    [0, 3, 6]
-    [1, 4, 7]
-    [2, 5, 8]
-    [0, 4, 8]
+const winningCombos = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
     [2, 4, 6]
 ]
 
-resetBtnEl
-
 /*---------------------------- Variables (state) ----------------------------*/
-
-let  turn = 1
-let winner = null
-let board = [null, null, null, null, null, null, null, null, null]
+let win, tie, lose, turn, winner 
+let board = []
 
 /*------------------------ Cached Element References ------------------------*/
-const squareEls = document.getElementsByClassName(".cell")
-const messageEl = document.getElementsByClassName(".display")
+const squareEls = document.querySelectorAll('div')
+const messageEl = document.querySelector('h2')
+const resetBtnEl = document.querySelector('button')
 
-console.log(squareEls)
-console.log(messageEl)
+
+
 /*----------------------------- Event Listeners -----------------------------*/
-resetBtnEl.addEventListener ('reset', init)
+
+squareEls.forEach(function(square){ square.addEventListener("click", handleClick)})
+
+resetBtnEl.addEventListener ('click', resetGame)
 
 
 /*-------------------------------- Functions --------------------------------*/
-init()
+init();
 
 function init () {
-
-render()
+    board = [null, null, null, null, null, null, null, null, null]
+    turn = 1
+    winner = null
+    render()
 }
+
 
 function render () {
-
+    {
+        getWinner();
+        board.forEach(function(square, i) {
+            if(square === 1) {
+                squareEls[i].textContent = 'X'
+            } else if(square === -1) {
+                squareEls[i].textContent = 'O'
+            }else {
+                squareEls[i].textContent = null
+            }
+        })
+            if(winner === null){
+                messageEl.textContent = `It's ${turn === 1 ? "Player X's turn!" : "Player O's turn!"}`
+            } else {messageEl.textContent = `${winner === 'T' ? "It's a tie!" : "Congrats! " + playerName() + " won!"}`
+            resetBtnEl.removeAttribute('hidden')
+        }
+    }
 }
 
-function handleClick () {
+function handleClick (evt) {
+    if(board[+(evt.target.id.replace("sq",''))] !== null){
+		return
+	} else if(winner !== null){
+		return
+	} else {
+		board[+(evt.target.id.replace("sq",''))] = turn
+	}
+	turn *= -1
+	render()
+}
 
+function playerName() {
+	let output;
+	if (turn === 1) {
+		output = 'Player O';
+	} else if (turn === -1) {
+		output = 'Player X';
+	}
+	return output;
 }
 
 function getWinner () {
-
+    winningCombos.forEach(combo => {
+        if (Math.abs(board[combo[0]] + board[combo[1]] + board[combo[2]]) === 3){
+              winner = turn
+          }else if(!board.includes(null)){
+              winner = 'T'
+          }
+      })
 }
+
+function resetGame () {
+    init();
+    
+}
+
 
 
 // 1) Define the required variables used to track the state of the game
