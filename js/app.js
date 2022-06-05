@@ -183,7 +183,7 @@ function render () {
             if(winner === null){
                 messageEl.textContent = `It's ${turn === 1 ? "Player 🍦's turn!" : "Player 🍧's turn!"}`
             } else {messageEl.textContent = `${winner === 'T' ? "It's a tie! 🫠" : "Congrats! " + playerName() + " won!"}`
-            resetBtnEl.removeAttribute('hidden')
+      
         }
     }
 }
